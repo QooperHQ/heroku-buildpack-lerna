@@ -39,7 +39,4 @@ lerna bootstrap --scope="${PACKAGE_NAME}" --include-dependencies 2>&1 | output
 header "Building ${PACKAGE_NAME} and its dependencies"
 lerna run build --scope="${PACKAGE_NAME}" --include-dependencies --stream 2>&1 | output
 
-header "Starting ${PACKAGE_NAME}"
-lerna exec --scope="${PACKAGE_NAME}" -- yarn start 
-
 echo "Copied ${PACKAGE_PATH} to root of app successfully" | indent
