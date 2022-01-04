@@ -17,6 +17,7 @@ if [ ! -f "${ENV_DIR}/PACKAGE_NAME" ]; then
     echo "PACKAGE_NAME was not set. Aborting" | indent
     exit 1
 fi
+
 PACKAGE_NAME="$(cat "${ENV_DIR}/PACKAGE_NAME")"
 
 if [ ! -f "${ENV_DIR}/PACKAGE_PATH" ]; then
@@ -39,4 +40,4 @@ lerna bootstrap --scope="${PACKAGE_NAME}" --include-dependencies 2>&1 | output
 header "Building ${PACKAGE_NAME} and its dependencies"
 lerna run build --scope="${PACKAGE_NAME}" --include-dependencies --stream 2>&1 | output
 
-echo "Copied ${PACKAGE_PATH} to root of app successfully" | indent
+cd $PACKAGE_PATH
