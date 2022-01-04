@@ -39,21 +39,7 @@ lerna bootstrap --scope="${PACKAGE_NAME}" --include-dependencies 2>&1 | output
 header "Building ${PACKAGE_NAME} and its dependencies"
 lerna run build --scope="${PACKAGE_NAME}" --include-dependencies --stream 2>&1 | output
 
-cd -
-
-(
-    mv "${BUILD_DIR}/${PACKAGE_PATH}" "${STAGE}" &&
-    mv "${BUILD_DIR}/.heroku" "${STAGE}/.heroku"
-    mv "${BUILD_DIR}/.profile.d" "${STAGE}/.profile.d"
-    rm -rf "${BUILD_DIR}"/* &&
-    mv "${STAGE}/$(basename "$PACKAGE_PATH")"/* "${BUILD_DIR}"
-    mv "${STAGE}/.heroku" "${BUILD_DIR}/.heroku"
-    mv "${STAGE}/.profile.d" "${BUILD_DIR}/.profile.d"
-)
-
-if [ $? -ne 0 ]; then
-    echo "FAILED to copy directory into place" | indent
-    exit 1
-fi
+header "Starting ${PACKAGE_NAME}"
+lerna exec --scope="${PACKAGE_NAME}" -- yarn start 
 
 echo "Copied ${PACKAGE_PATH} to root of app successfully" | indent
